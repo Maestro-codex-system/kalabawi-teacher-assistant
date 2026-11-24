@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import Image from "next/image";
+import { UserButton } from "@clerk/nextjs";
 import { Menu, PanelLeftOpen } from "lucide-react";
 import { Sidebar } from "./sidebar";
 
@@ -50,13 +51,17 @@ export function AppShell({ children }: { children: ReactNode }) {
         <span className="text-[14px] font-extrabold tracking-[-0.02em] text-navy">
           Kalabawi
         </span>
-        <Image
-          src="/mascot-empty.png"
-          alt="Juan Dela Cruz"
-          width={64}
-          height={58}
-          className="ml-auto h-8 w-8 rounded-full bg-[#eef2f7] object-cover"
-        />
+        <div className="ml-auto">
+          <UserButton
+            appearance={{
+              elements: {
+                userButtonAvatarBox: "h-8 w-8",
+                userButtonTrigger:
+                  "rounded-full focus:shadow-none focus-visible:ring-2 focus-visible:ring-brand/30",
+              },
+            }}
+          />
+        </div>
       </header>
 
       <button

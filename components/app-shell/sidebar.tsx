@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { SignOutButton, useClerk, useUser } from "@clerk/nextjs";
 import {
   Boxes,
   ClipboardCheck,
@@ -10,6 +11,7 @@ import {
   FileText,
   Folder,
   LayoutGrid,
+  LogOut,
   MessageSquare,
   PanelLeftClose,
   Presentation,
@@ -72,6 +74,15 @@ function NavRow({ icon: Icon, label }: { icon: LucideIcon; label: string }) {
 }
 
 export function Sidebar({ onCollapse, onClose }: SidebarProps) {
+  const { user } = useUser();
+  const { openUserProfile } = useClerk();
+
+  const displayName =
+    user?.fullName ||
+    user?.username ||
+    user?.primaryEmailAddress?.emailAddress ||
+    "Teacher";
+
   return (
     <div className="flex h-dvh w-[260px] flex-col border-r border-line bg-white">
       <div className="flex items-center gap-2.5 px-4 pb-4 pt-4">
@@ -172,21 +183,52 @@ export function Sidebar({ onCollapse, onClose }: SidebarProps) {
             <NavRow key={item.label} {...item} />
           ))}
         </ul>
+
+        <div className="mt-2 border-t border-line pt-2">
+          <SignOutButton redirectUrl="/sign-in">
+            <button
+              type="button"
+              className="group flex h-10 w-full items-center gap-3 rounded-[8px] px-3 text-left text-[13.5px] font-medium text-[#475569] transition-colors hover:bg-[#fef2f2] hover:text-[#b91c1c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/30"
+            >
+              <LogOut
+                size={17}
+                strokeWidth={1.8}
+                className="shrink-0 text-[#64748b] transition-colors group-hover:text-[#b91c1c]"
+              />
+              <span className="truncate">Sign out</span>
+            </button>
+          </SignOutButton>
+        </div>
       </nav>
 
       <div className="mt-auto px-4 pb-4 pt-3">
-        <div className="flex items-center gap-2.5">
-          <Image
-            src="/mascot-empty.png"
-            alt=""
-            width={72}
-            height={66}
-            className="h-9 w-9 shrink-0 rounded-full bg-[#eef2f7] object-cover"
-          />
+        <button
+          type="button"
+          onClick={() => openUserProfile()}
+          aria-label="Open account settings"
+          className="flex w-full items-center gap-2.5 rounded-[10px] text-left transition-colors hover:bg-canvas focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/30"
+        >
+          {user?.imageUrl ? (
+            <Image
+              src={user.imageUrl}
+              alt=""
+              width={72}
+              height={72}
+              className="h-9 w-9 shrink-0 rounded-full object-cover"
+            />
+          ) : (
+            <Image
+              src="/mascot-empty.png"
+              alt=""
+              width={72}
+              height={66}
+              className="h-9 w-9 shrink-0 rounded-full bg-[#eef2f7] object-cover"
+            />
+          )}
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-1.5">
               <span className="truncate text-[12.5px] font-bold text-ink">
-                Juan Dela Cruz
+                {displayName}
               </span>
               <span className="shrink-0 rounded-[5px] bg-[#eef2f6] px-1.5 py-0.5 text-[9px] font-bold leading-none text-[#475569]">
                 Pro
@@ -196,7 +238,7 @@ export function Sidebar({ onCollapse, onClose }: SidebarProps) {
               0/30 batches &middot; 79/80 individual
             </p>
           </div>
-        </div>
+        </button>
       </div>
     </div>
   );
