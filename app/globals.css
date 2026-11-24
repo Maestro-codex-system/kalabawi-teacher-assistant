@@ -7,7 +7,12 @@
   --color-navy: #17365c;
   --color-muted: #64748b;
   --color-canvas: #f8fafc;
+  --color-shell: #f5f7fa;
   --color-line: #e8edf3;
+  --color-wash: #eff5fe;
+  --color-wash-line: #dbe8fb;
+  --color-quote: #f1f6fd;
+  --color-panel: #fbfcfe;
   --color-success: #10b981;
   --color-danger: #ef4444;
   --color-warning: #f59e0b;
@@ -38,5 +43,9 @@
 @layer components {
   .ds-card {
     @apply rounded-[16px] border border-line bg-white shadow-soft;
+  }
+
+  .app-link {
+    @apply inline-flex items-center gap-1.5 rounded-[6px] font-semibold text-brand transition-colors hover:text-[#1d4ed8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-offset-2;
   }
 }
