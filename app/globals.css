@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #2563eb;
+  --color-brand-soft: #dbeafe;
+  --color-ink: #0f172a;
+  --color-navy: #17365c;
+  --color-muted: #64748b;
+  --color-canvas: #f8fafc;
+  --color-line: #e8edf3;
+  --color-success: #10b981;
+  --color-danger: #ef4444;
+  --color-warning: #f59e0b;
+  --color-info: #3b82f6;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-serif: var(--font-merriweather), Georgia, "Times New Roman", serif;
+
+  --shadow-soft: 0 14px 30px -24px rgb(15 23 42 / 0.5);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-canvas text-ink antialiased;
+  }
+
+  ::selection {
+    background-color: #dbeafe;
+    color: #0f172a;
+  }
+}
+
+@layer components {
+  .ds-card {
+    @apply rounded-[16px] border border-line bg-white shadow-soft;
+  }
+}
