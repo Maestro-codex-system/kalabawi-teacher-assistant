@@ -16,9 +16,12 @@ const merriweather = Merriweather({
 });
 
 export const metadata: Metadata = {
-  title: "Kalabawi Design System",
+  title: {
+    default: "Kalabawi — The DepEd Teacher Assistant",
+    template: "%s — Kalabawi",
+  },
   description:
-    "The design system behind Kalabawi, the DepEd teacher assistant. Clean, focused, and high-yield.",
+    "Kalabawi helps Filipino public school teachers generate DepEd-compliant ILAW lesson plans, presentations, and assessments.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
