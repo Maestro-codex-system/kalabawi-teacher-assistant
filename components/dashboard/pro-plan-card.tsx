@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowRight, CalendarDays, FileText, Folder } from "lucide-react";
 import { UsageRing } from "./usage-ring";
 
@@ -30,13 +31,13 @@ export function ProPlanCard() {
           </span>
         </div>
 
-        <button
-          type="button"
+        <Link
+          href="/subscription"
           className="app-link order-3 ml-auto shrink-0 text-[12.5px] sm:order-2"
         >
           Manage Subscription
           <ArrowRight size={14} strokeWidth={2} />
-        </button>
+        </Link>
 
         <p className="order-2 w-full text-[12.5px] text-muted sm:order-3">
           DepEd compliant teaching materials subscription
