@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowRight, Download, Eye, FileText, MoreHorizontal } from "lucide-react";
 
 type RecentFile = {
@@ -45,10 +46,10 @@ export function RecentFiles() {
     <section className="ds-card overflow-hidden">
       <div className="flex items-center justify-between gap-3 px-5 py-4 sm:px-6">
         <h2 className="text-[14px] font-bold text-ink">Recent Files</h2>
-        <button type="button" className="app-link text-[12.5px]">
+        <Link href="/files" className="app-link text-[12.5px]">
           View all
           <ArrowRight size={14} strokeWidth={2} />
-        </button>
+        </Link>
       </div>
 
       <ul className="divide-y divide-[#eef2f6] border-t border-line">
