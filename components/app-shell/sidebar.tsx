@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { SignOutButton, useClerk, useUser } from "@clerk/nextjs";
 import {
@@ -55,20 +56,48 @@ function SectionLabel({
   );
 }
 
-function NavRow({ icon: Icon, label }: { icon: LucideIcon; label: string }) {
+type NavRowProps = {
+  icon: LucideIcon;
+  label: string;
+  href?: string;
+  active?: boolean;
+};
+
+function NavRow({ icon: Icon, label, href, active = false }: NavRowProps) {
+  const className = `group flex h-10 w-full items-center gap-3 rounded-[8px] px-3 text-left text-[13.5px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/30 ${
+    active
+      ? "border border-[#e3eaf3] bg-[#eef3f9] font-semibold text-ink"
+      : "font-medium text-[#475569] hover:bg-[#f5f8fc] hover:text-ink"
+  }`;
+
+  const content = (
+    <>
+      <Icon
+        size={17}
+        strokeWidth={1.8}
+        className={`shrink-0 transition-colors ${
+          active ? "text-[#334155]" : "text-[#64748b] group-hover:text-ink"
+        }`}
+      />
+      <span className="truncate">{label}</span>
+    </>
+  );
+
   return (
     <li>
-      <button
-        type="button"
-        className="group flex h-10 w-full items-center gap-3 rounded-[8px] px-3 text-left text-[13.5px] font-medium text-[#475569] transition-colors hover:bg-[#f5f8fc] hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/30"
-      >
-        <Icon
-          size={17}
-          strokeWidth={1.8}
-          className="shrink-0 text-[#64748b] transition-colors group-hover:text-ink"
-        />
-        <span className="truncate">{label}</span>
-      </button>
+      {href ? (
+        <Link
+          href={href}
+          aria-current={active ? "page" : undefined}
+          className={className}
+        >
+          {content}
+        </Link>
+      ) : (
+        <button type="button" className={className}>
+          {content}
+        </button>
+      )}
     </li>
   );
 }
@@ -76,6 +105,8 @@ function NavRow({ icon: Icon, label }: { icon: LucideIcon; label: string }) {
 export function Sidebar({ onCollapse, onClose }: SidebarProps) {
   const { user } = useUser();
   const { openUserProfile } = useClerk();
+  const pathname = usePathname();
+  const dashboardActive = pathname === "/" || pathname === "/dashboard";
 
   const displayName =
     user?.fullName ||
@@ -137,10 +168,20 @@ export function Sidebar({ onCollapse, onClose }: SidebarProps) {
       >
         <Link
           href="/dashboard"
-          aria-current="page"
-          className="flex h-11 items-center gap-3 rounded-[10px] border border-[#e3eaf3] bg-[#eef3f9] px-3 text-[13.5px] font-semibold text-ink transition-colors hover:bg-[#e9eff7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/30"
+          aria-current={dashboardActive ? "page" : undefined}
+          className={`flex h-11 items-center gap-3 rounded-[10px] border px-3 text-[13.5px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/30 ${
+            dashboardActive
+              ? "border-[#e3eaf3] bg-[#eef3f9] font-semibold text-ink hover:bg-[#e9eff7]"
+              : "border-transparent font-medium text-[#475569] hover:bg-[#f5f8fc] hover:text-ink"
+          }`}
         >
-          <LayoutGrid size={17} strokeWidth={2} className="shrink-0 text-[#334155]" />
+          <LayoutGrid
+            size={17}
+            strokeWidth={2}
+            className={`shrink-0 ${
+              dashboardActive ? "text-[#334155]" : "text-[#64748b]"
+            }`}
+          />
           Dashboard
         </Link>
 
@@ -173,7 +214,12 @@ export function Sidebar({ onCollapse, onClose }: SidebarProps) {
 
         <div className="mt-3">
           <ul>
-            <NavRow icon={Folder} label="My Files" />
+            <NavRow
+              icon={Folder}
+              label="My Files"
+              href="/files"
+              active={pathname === "/files"}
+            />
           </ul>
         </div>
 
