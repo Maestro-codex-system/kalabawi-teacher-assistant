@@ -33,8 +33,8 @@ const individualTools: { icon: LucideIcon; label: string }[] = [
   { icon: ClipboardCheck, label: "TOS & Exam" },
 ];
 
-const accountItems: { icon: LucideIcon; label: string }[] = [
-  { icon: CreditCard, label: "Subscription" },
+const accountItems: { icon: LucideIcon; label: string; href?: string }[] = [
+  { icon: CreditCard, label: "Subscription", href: "/subscription" },
   { icon: User, label: "Profile" },
   { icon: Settings, label: "Settings" },
   { icon: MessageSquare, label: "Contact Us" },
@@ -226,7 +226,11 @@ export function Sidebar({ onCollapse, onClose }: SidebarProps) {
         <SectionLabel className="mt-5">Account</SectionLabel>
         <ul className="mt-2 space-y-0.5">
           {accountItems.map((item) => (
-            <NavRow key={item.label} {...item} />
+            <NavRow
+              key={item.label}
+              {...item}
+              active={item.href ? pathname === item.href : undefined}
+            />
           ))}
         </ul>
 
