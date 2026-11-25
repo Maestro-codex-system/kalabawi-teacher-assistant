@@ -37,7 +37,7 @@ const accountItems: { icon: LucideIcon; label: string; href?: string }[] = [
   { icon: CreditCard, label: "Subscription", href: "/subscription" },
   { icon: User, label: "Profile" },
   { icon: Settings, label: "Settings" },
-  { icon: MessageSquare, label: "Contact Us" },
+  { icon: MessageSquare, label: "Contact Us", href: "/contact" },
 ];
 
 function SectionLabel({
