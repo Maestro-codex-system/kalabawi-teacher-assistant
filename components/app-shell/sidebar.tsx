@@ -36,7 +36,7 @@ const individualTools: { icon: LucideIcon; label: string }[] = [
 const accountItems: { icon: LucideIcon; label: string; href?: string }[] = [
   { icon: CreditCard, label: "Subscription", href: "/subscription" },
   { icon: User, label: "Profile", href: "/profile" },
-  { icon: Settings, label: "Settings" },
+  { icon: Settings, label: "Settings", href: "/settings" },
   { icon: MessageSquare, label: "Contact Us", href: "/contact" },
 ];
 
